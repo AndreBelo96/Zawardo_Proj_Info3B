@@ -47,10 +47,8 @@ public class GameScreen extends ScreenAdapter {
         player.update(delta);
 
         batch.begin();
-
         map.render(batch);
         player.render(batch);
-
         batch.end();
 
         for(Tile t : map.base) {
