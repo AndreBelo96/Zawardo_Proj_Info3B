@@ -36,16 +36,17 @@ public class GameScreen extends ScreenAdapter {
         // disegno sulla camera
         batch.setProjectionMatrix(camera.combined);
         cameraInput();
+
+
+        camera.update();
+        player.update(delta);
+
         for(Tile t : map.base) {
             if (player.getPos().x == t.tileMapPos.y && player.getPos().y == t.tileMapPos.x && bool_switch) {
                 t.on = !t.on;
                 bool_switch = false;
             }
         }
-
-        camera.update();
-        player.update(delta);
-
         batch.begin();
         map.render(batch);
         player.render(batch);
@@ -76,31 +77,35 @@ public class GameScreen extends ScreenAdapter {
 
     }
 
+    public void setBool_switch(boolean bool_switch) {
+        this.bool_switch = bool_switch;
+    }
+
+    public boolean isBool_switch() {
+        return bool_switch;
+    }
+
     public void cameraInput() {
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.A)){
+        if(Gdx.input.isKeyJustPressed(Input.Keys.A) && player.isCanIJump()){
             camera.position.y -= 12;
             camera.position.x -= 32;
             player.move();
-            bool_switch = true;
             bool_lose = true;
-        } else if(Gdx.input.isKeyJustPressed(Input.Keys.D)){
+        } else if(Gdx.input.isKeyJustPressed(Input.Keys.D) && player.isCanIJump()){
             camera.position.y += 12;
             camera.position.x += 32;
             player.move();
-            bool_switch = true;
             bool_lose = true;
-        } else if(Gdx.input.isKeyJustPressed(Input.Keys.W)){
+        } else if(Gdx.input.isKeyJustPressed(Input.Keys.W) && player.isCanIJump()){
             camera.position.y += 12;
             camera.position.x -= 32;
             player.move();
-            bool_switch = true;
             bool_lose = true;
-        } else if(Gdx.input.isKeyJustPressed(Input.Keys.S)){
+        } else if(Gdx.input.isKeyJustPressed(Input.Keys.S) && player.isCanIJump()){
             camera.position.y -= 12;
             camera.position.x += 32;
             player.move();
-            bool_switch = true;
             bool_lose = true;
         } else if(Gdx.input.isKeyPressed(Input.Keys.Z)){
             camera.zoom -= 0.005;

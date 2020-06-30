@@ -17,8 +17,8 @@ public class Player implements Entity{
     private Array<TextureRegion> frames;
     private Animation<TextureRegion> move,idle;
     private GameScreen screen;
-    private float time,  animationMove_Time;
-    private boolean bool_move,startAnimMove;
+    private float time,  animationMove_Time, Time_Control_Vel;
+    private boolean bool_move, startAnimMove, canIJump;
     private int wasd;
 
     public Player(GameScreen screen){
@@ -27,6 +27,8 @@ public class Player implements Entity{
         this.screen = screen;
         time = 0;
         wasd = 0;
+        canIJump = true;
+        Time_Control_Vel = 0;
         animationMove_Time = 0;
         currentState = State.IDLE;
         previousState = State.IDLE;
@@ -52,48 +54,71 @@ public class Player implements Entity{
     public void update(float delta) {
         time = currentState == previousState ? time + delta : 0;
 
+        Time_Control_Vel += delta;
+
         if(startAnimMove){
             animationMove_Time += delta;
         }
 
-        /*while( <= Constant.MOVE_TIME){
-            switch //come lo uso?
-            {
-                pos.x -= Constant.MOVE_VEL_PER_PIXEL_X;
-                pos.y += Constant.PLAYER_MOVEMENT_Y;
+        //System.out.println("TIMECONTROL: " + Time_Control_Vel + " mjillisecondi: ");
+
+
+
+        if( Time_Control_Vel <= (Constant.MOVE_TIME - 0.3f) && Time_Control_Vel >= 0.3f && bool_move){
+            switch(wasd){
+                case 1:
+                    pos.x -= Constant.MOVE_VEL_PER_PIXEL_X;
+                    pos.y += Constant.MOVE_VEL_PER_PIXEL_Y;
+                    break;
+                case 2:
+                    pos.x += Constant.MOVE_VEL_PER_PIXEL_X;
+                    pos.y -= Constant.MOVE_VEL_PER_PIXEL_Y;
+                    break;
+                case 3:
+                    pos.x -= Constant.MOVE_VEL_PER_PIXEL_X;
+                    pos.y -= Constant.MOVE_VEL_PER_PIXEL_Y;
+                    break;
+                case 4:
+                    pos.x += Constant.MOVE_VEL_PER_PIXEL_X;
+                    pos.y += Constant.MOVE_VEL_PER_PIXEL_Y;
+                    break;
+                default:
             }
-        }*/
+        }
 
     }
 
     public void move(){
-        if(Gdx.input.isKeyJustPressed(Input.Keys.W)){
+        if(Gdx.input.isKeyJustPressed(Input.Keys.W) && canIJump){
             bool_move = true;
-            currentState = State.JUMPING;
-            pos.x -= Constant.TILE_WIDHT/2;
-            pos.y += Constant.PLAYER_MOVEMENT_Y;
+            canIJump = false;
+            Time_Control_Vel = 0;
             wasd = 1;
             worldPos.x += 1;
+            currentState = State.JUMPING;
         }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.S)){
-            pos.x += Constant.TILE_WIDHT/2;
-            pos.y -= Constant.PLAYER_MOVEMENT_Y;
+        if(Gdx.input.isKeyJustPressed(Input.Keys.S) && canIJump){
+            bool_move = true;
+            canIJump = false;
+            Time_Control_Vel = 0;
+            wasd = 2;
             worldPos.x -= 1;
-            bool_move = true;
             currentState = State.JUMPING;
         }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.A)){
-            pos.x -= Constant.TILE_WIDHT/2;
-            pos.y -= Constant.PLAYER_MOVEMENT_Y;
+        if(Gdx.input.isKeyJustPressed(Input.Keys.A) && canIJump){
+            bool_move = true;
+            canIJump = false;
+            Time_Control_Vel = 0;
+            wasd = 3;
             worldPos.y -= 1;
-            bool_move = true;
             currentState = State.JUMPING;
         }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.D)){
-            pos.x += Constant.TILE_WIDHT/2;
-            pos.y += Constant.PLAYER_MOVEMENT_Y;
-            worldPos.y += 1;
+        if(Gdx.input.isKeyJustPressed(Input.Keys.D) && canIJump){
             bool_move = true;
+            canIJump = false;
+            Time_Control_Vel = 0;
+            worldPos.y += 1;
+            wasd = 4;
             currentState = State.JUMPING;
         }
     }
@@ -106,6 +131,8 @@ public class Player implements Entity{
         if(bool_move){
             if(animationMove_Time >= Constant.MOVE_TIME){
                 bool_move = false;
+                canIJump = true;
+                screen.setBool_switch(true);
                 previousState = State.JUMPING;
                 currentState = State.IDLE;
             }
@@ -121,5 +148,10 @@ public class Player implements Entity{
         }
 
     }
+
+    public boolean isCanIJump() {
+        return canIJump;
+    }
+
 }
 
