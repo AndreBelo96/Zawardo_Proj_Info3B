@@ -7,6 +7,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
+
 
 public class GameScreen extends ScreenAdapter {
 
@@ -16,8 +20,9 @@ public class GameScreen extends ScreenAdapter {
     public static Player player;
     private boolean bool_switch,bool_win, bool_lose;
     private static TextureAtlas atlas;
+    private Actor actor=new Actor();
 
-    public GameScreen(SpriteBatch batch){
+    public GameScreen(SpriteBatch batch, EventListener listener){
         this.batch = batch;
         atlas = new TextureAtlas("Asset_Proj.pack");
         camera = new OrthographicCamera(320,160);
@@ -27,6 +32,7 @@ public class GameScreen extends ScreenAdapter {
         bool_switch = false;
         bool_win = false;
         bool_lose = true;
+        actor.addListener(listener);
     }
 
     public void render(float delta){
@@ -69,6 +75,7 @@ public class GameScreen extends ScreenAdapter {
 
         if(bool_win){
             System.out.println("YOU WIN");
+            actor.fire(new Event());
         }
 
         if(bool_lose){
