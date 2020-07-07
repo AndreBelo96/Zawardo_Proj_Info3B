@@ -47,7 +47,7 @@ public class Tilemap {
     }
 
     public void fillMap() throws IOException{
-        FileHandle fh = Gdx.files.internal("lvl1.txt");
+        FileHandle fh = Gdx.files.internal("lvl0.txt");
         BufferedReader br = new BufferedReader(new FileReader(fh.path()));
         String s  = "";
         int count_row = 0;

@@ -10,16 +10,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Scaling;
-import com.badlogic.gdx.utils.viewport.ScalingViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
+
 
 
 public class WinScreen extends ScreenAdapter {
     private SpriteBatch batch;
     private OrthographicCamera camera;
-    private boolean backtoGame;
-    private TextButton button;
+    private TextButton reloadbutton,exitbutton,nextbutton;
     private Stage stage;
     private BitmapFont font;
 
@@ -27,22 +24,26 @@ public class WinScreen extends ScreenAdapter {
         this.batch=batch;
         camera=new OrthographicCamera();
         //camera.setToOrtho(false,Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
-        backtoGame=false;
         TextButton.TextButtonStyle style=new TextButton.TextButtonStyle();
-        font=new BitmapFont();
+        font=new BitmapFont(Gdx.files.internal("roboto_light.fnt"));
         font.setColor(Color.WHITE);
         style.font=font;
-        button=new TextButton("Back to Game",style);
-        TextButton falsebutton=new TextButton("You won!",style);
-        falsebutton.setBounds(Gdx.graphics.getWidth()/2-100,Gdx.graphics.getHeight()-300,200,100);
-
-        button.setBounds(Gdx.graphics.getWidth()/2-100,Gdx.graphics.getHeight()/2-50,200,100);
-        button.addListener(listener);
+        reloadbutton=new TextButton("Reload level",style);
+        nextbutton=new TextButton("Next Level",style);
+        exitbutton=new TextButton("EXIT GAME",style);
+        TextButton falsebutton=new TextButton("LEVEL CLEARED",style);
+        falsebutton.setBounds(Gdx.graphics.getWidth()/2-100,Gdx.graphics.getHeight()-200,200,100);
+        reloadbutton.setBounds(Gdx.graphics.getWidth()/2-100,Gdx.graphics.getHeight()/2-50,200,100);
+        exitbutton.setBounds(Gdx.graphics.getWidth()/2-100,Gdx.graphics.getHeight()/2-250,200,100);
+        nextbutton.setBounds(Gdx.graphics.getWidth()/2-100,Gdx.graphics.getHeight()/2-150,200,100);
+        reloadbutton.addListener(listener);
         stage=new Stage();
         stage.clear();
         Gdx.input.setInputProcessor(stage);
         stage.addActor(falsebutton);
-        stage.addActor(button);
+        stage.addActor(reloadbutton);
+        stage.addActor(exitbutton);
+        stage.addActor(nextbutton);
     }
 
     @Override
@@ -52,7 +53,6 @@ public class WinScreen extends ScreenAdapter {
         stage.act();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        font.draw(batch,"You won!",Gdx.graphics.getWidth()/3,Gdx.graphics.getHeight()/3);
         stage.draw();
         batch.end();
 
