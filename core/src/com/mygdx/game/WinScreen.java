@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 
 
@@ -20,7 +19,7 @@ public class WinScreen extends ScreenAdapter {
     private Stage stage;
     private BitmapFont font;
 
-    public WinScreen(SpriteBatch batch, ClickListener listener){
+    public WinScreen(SpriteBatch batch, ClickManager[] listener){
         this.batch=batch;
         camera=new OrthographicCamera();
         //camera.setToOrtho(false,Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
@@ -28,22 +27,27 @@ public class WinScreen extends ScreenAdapter {
         font=new BitmapFont(Gdx.files.internal("roboto_light.fnt"));
         font.setColor(Color.WHITE);
         style.font=font;
-        reloadbutton=new TextButton("Reload level",style);
-        nextbutton=new TextButton("Next Level",style);
-        exitbutton=new TextButton("EXIT GAME",style);
-        TextButton falsebutton=new TextButton("LEVEL CLEARED",style);
+        TextButton falsebutton=new TextButton(Constant.WIN_TEXT,style);
+        reloadbutton=new TextButton(Constant.RELOAD_TEXT,style);
+        nextbutton=new TextButton(Constant.NEXT_TEXT,style);
+        exitbutton=new TextButton(Constant.EXIT_TEXT,style);
+
         falsebutton.setBounds(Gdx.graphics.getWidth()/2-100,Gdx.graphics.getHeight()-200,200,100);
         reloadbutton.setBounds(Gdx.graphics.getWidth()/2-100,Gdx.graphics.getHeight()/2-50,200,100);
-        exitbutton.setBounds(Gdx.graphics.getWidth()/2-100,Gdx.graphics.getHeight()/2-250,200,100);
         nextbutton.setBounds(Gdx.graphics.getWidth()/2-100,Gdx.graphics.getHeight()/2-150,200,100);
-        reloadbutton.addListener(listener);
+        exitbutton.setBounds(Gdx.graphics.getWidth()/2-100,Gdx.graphics.getHeight()/2-250,200,100);
+
+        reloadbutton.addListener(listener[0]);
+        nextbutton.addListener(listener[1]);
+        exitbutton.addListener(listener[2]);
+
         stage=new Stage();
         stage.clear();
         Gdx.input.setInputProcessor(stage);
         stage.addActor(falsebutton);
         stage.addActor(reloadbutton);
-        stage.addActor(exitbutton);
         stage.addActor(nextbutton);
+        stage.addActor(exitbutton);
     }
 
     @Override

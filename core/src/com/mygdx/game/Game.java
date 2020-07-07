@@ -16,14 +16,8 @@ public class Game extends com.badlogic.gdx.Game {
 	private GameScreen screen;
 
 	private WinScreen wscreen;
-	private ClickListener listener = new ClickListener() {
-		@Override
-		public void clicked(InputEvent event, float x, float y) {
-			super.clicked(event,x,y);
-			reloadGame();
-			setScreen(screen);
-		}
-	};
+	private ClickManager[] listener=generateListeners();
+
 	private EventListener winDetector = new EventListener() {
 
 		@Override
@@ -60,5 +54,39 @@ public class Game extends com.badlogic.gdx.Game {
 	}
 	private void reloadWin(){
 		wscreen=new WinScreen(batch,listener);
+	}
+
+	private ClickManager[] generateListeners() {
+		ClickManager[] temp=new ClickManager[3];
+		temp[0]=new ClickManager(){
+
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				super.clicked(event, x, y);
+				reloadGame();
+				setScreen(screen);
+			}
+		};
+		temp[1]=new ClickManager(){
+
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				super.clicked(event, x, y);
+				Tilemap.mapUpdate();
+				reloadGame();
+				setScreen(screen);
+			}
+		};
+		temp[2]=new ClickManager(){
+
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				super.clicked(event, x, y);
+				Game.this.dispose();
+				Gdx.app.exit();
+				//Game.this.dispose();
+			}
+		};
+		return temp;
 	}
 }

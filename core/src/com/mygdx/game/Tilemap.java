@@ -22,6 +22,8 @@ public class Tilemap {
     private Texture potenziamento;
     //map
     private String[][] map;
+    //map name
+    private static String map_prefix="lvl",map_no="0",map_filetype=".txt";
 
     public Tilemap(){
         /*potenziamento = new Texture("");*/
@@ -47,7 +49,7 @@ public class Tilemap {
     }
 
     public void fillMap() throws IOException{
-        FileHandle fh = Gdx.files.internal("lvl0.txt");
+        FileHandle fh = Gdx.files.internal(Tilemap.mapdir());
         BufferedReader br = new BufferedReader(new FileReader(fh.path()));
         String s  = "";
         int count_row = 0;
@@ -79,5 +81,19 @@ public class Tilemap {
                 }
             }
         }
+    }
+
+    private static String mapdir(){
+        return Tilemap.map_prefix+Tilemap.map_no+Tilemap.map_filetype;
+    }
+
+    private static void mapUpdate(int nextLevel){
+        Tilemap.map_no=(new Integer(nextLevel)).toString();
+    }
+
+    public static void mapUpdate(){
+        int no=Integer.parseInt(Tilemap.map_no);
+        if(no==2)mapUpdate(0);
+        else mapUpdate(no+1);
     }
 }

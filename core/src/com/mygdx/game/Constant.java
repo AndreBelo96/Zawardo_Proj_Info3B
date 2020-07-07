@@ -14,4 +14,10 @@ public class Constant {
     public static final float PLAYER_MOVEMENT_Y = TILE_HEIGHT/2 - BORDER_HEIGHT;
     public static final float MOVE_VEL_PER_PIXEL_X = (TILE_WIDHT/2) / 66f;
     public static final float MOVE_VEL_PER_PIXEL_Y = (PLAYER_MOVEMENT_Y) / 66f;
+    public static final String WIN_TEXT="LEVEL CLEARED";
+    public static final String RELOAD_TEXT="Reload Level";
+    public static final String NEXT_TEXT="Next Level";
+    public static final String EXIT_TEXT="EXIT GAME";
+    public static final int N_OF_LEVELS=2;
+
 }
