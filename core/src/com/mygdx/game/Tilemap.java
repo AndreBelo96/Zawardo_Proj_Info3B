@@ -93,7 +93,7 @@ public class Tilemap {
 
     public static void mapUpdate(){
         int no=Integer.parseInt(Tilemap.map_no);
-        if(no==2)mapUpdate(0);
+        if(no==Constant.N_OF_LEVELS)mapUpdate(Constant.FIRST_LEVEL);
         else mapUpdate(no+1);
     }
 }

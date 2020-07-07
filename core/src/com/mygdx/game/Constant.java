@@ -18,6 +18,6 @@ public class Constant {
     public static final String RELOAD_TEXT="Reload Level";
     public static final String NEXT_TEXT="Next Level";
     public static final String EXIT_TEXT="EXIT GAME";
-    public static final int N_OF_LEVELS=2;
+    public static final int N_OF_LEVELS=2,FIRST_LEVEL=0;
 
 }

@@ -93,7 +93,9 @@ public class GameScreen extends ScreenAdapter {
     }
 
     public void cameraInput() {
-
+        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+            Game.setCall(true);
+            actor.fire(new Event());}
         if(Gdx.input.isKeyJustPressed(Input.Keys.A) && player.isCanIJump()){
             camera.position.y -= 12;
             camera.position.x -= 32;
