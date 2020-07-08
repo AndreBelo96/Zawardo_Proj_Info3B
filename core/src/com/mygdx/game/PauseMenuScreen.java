@@ -14,22 +14,24 @@ import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
+import java.util.concurrent.TimeUnit;
+
 public class PauseMenuScreen extends ScreenAdapter {
     private SpriteBatch batch;
     private OrthographicCamera camera;
     private TextButton reloadbutton,exitbutton,continuebutton;
     private Stage stage;
     private BitmapFont font;
-    private Actor actor=new Actor();
 
-    public PauseMenuScreen(SpriteBatch batch, ClickManager[] listener, EventListener detector){
+
+    public PauseMenuScreen(SpriteBatch batch, ClickManager[] listener){
         this.batch=batch;
         camera=new OrthographicCamera();
         TextButton.TextButtonStyle style=new TextButton.TextButtonStyle();
         font=new BitmapFont(Gdx.files.internal("roboto_light.fnt"));
         font.setColor(Color.WHITE);
         style.font=font;
-        TextButton falsebutton=new TextButton("PRESS ESC TO RESUME",style);
+        TextButton falsebutton=new TextButton("GAME PAUSED",style);
         reloadbutton=new TextButton(Constant.RELOAD_TEXT,style);
         exitbutton=new TextButton(Constant.EXIT_TEXT,style);
         continuebutton=new TextButton("Continue",style);
@@ -49,7 +51,7 @@ public class PauseMenuScreen extends ScreenAdapter {
         stage.addActor(continuebutton);
         stage.addActor(reloadbutton);
         stage.addActor(exitbutton);
-        actor.addListener(detector);
+
     }
 
     @Override
@@ -58,16 +60,10 @@ public class PauseMenuScreen extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
         batch.setProjectionMatrix(camera.combined);
-        manageActor();
+
         batch.begin();
         stage.draw();
         batch.end();
 
-    }
-
-    private void manageActor(){
-        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
-            actor.fire(new Event());
-        }
     }
 }

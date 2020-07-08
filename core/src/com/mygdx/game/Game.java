@@ -23,7 +23,7 @@ public class Game extends com.badlogic.gdx.Game {
 	private PauseMenuScreen menu;
 
 	private static boolean syscall=false;
-	public static boolean getCall(){return Game.syscall;}
+	public static boolean getCall()			{return Game.syscall;}
 	public static void setCall(boolean call){Game.syscall=call;}
 
 	private ClickManager[] winsListener=generateListeners();
@@ -32,62 +32,27 @@ public class Game extends com.badlogic.gdx.Game {
 
 		@Override
 		public boolean handle(Event event) {
-			if(getCall())setScreen(menu);
+			if(Game.getCall())setScreen(menu);
 			else setScreen(wscreen);
 			return true;
 		}
 
 	};
-	private EventListener actionDetector1=new EventListener() {
-		@Override
-		public boolean handle(Event event) {
-			if(getCall()){
-				Game.setCall(false);
-				setScreen(screen);
-			}
-			return true;
-		}
-	};
+
 
 
 	@Override
 	public void create () {
-		batch  = new SpriteBatch();
-		screen = new GameScreen(batch,actionDetector0);
-		wscreen=new WinScreen(batch,winsListener);
-		menu=new PauseMenuScreen(batch,menuListener,actionDetector1);
+		batch   = new SpriteBatch();
+		screen  = new GameScreen(batch,actionDetector0);
+		wscreen = new WinScreen(batch,winsListener);
+		menu    = new PauseMenuScreen(batch,menuListener);
 		setScreen(screen);
-		/*
-		KeyListener key=new KeyListener() {
-
-			@Override
-			public void keyTyped(KeyEvent keyEvent) {
-				//No action needed.
-			}
-
-			@Override
-			public void keyPressed(KeyEvent keyEvent) {
-				if(keyEvent.getKeyChar()==Input.Keys.ESCAPE){
-					if(getScreen().equals(screen))setScreen(menu);
-					if(getScreen().equals(menu))setScreen(screen);
-				}
-			}
-
-			@Override
-			public void keyReleased(KeyEvent keyEvent) {
-				//No action needed.
-			}
-
-		};*/
 	}
 
 	@Override
 	public void render(){
 		super.render();
-		/*if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
-			if(getScreen().equals(screen))setScreen(menu);
-			if(getScreen().equals(menu))setScreen(screen);
-		}*/
 	}
 
 	@Override
@@ -145,6 +110,7 @@ public class Game extends com.badlogic.gdx.Game {
 			public void clicked(InputEvent event, float x, float y) {
 				super.clicked(event, x, y);
 				setScreen(screen);
+				Game.setCall(false);
 			}
 		};
 		temp[1]=new ClickManager(){
