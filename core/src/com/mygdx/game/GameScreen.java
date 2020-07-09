@@ -141,5 +141,6 @@ public class GameScreen extends ScreenAdapter {
     public TextureAtlas getAtlas(){
         return atlas;
     }
+    public void setTileMap(Tilemap map){this.map=map;}
 }
 

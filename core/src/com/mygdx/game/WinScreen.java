@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
+import java.util.ArrayList;
 
 
 public class WinScreen extends ScreenAdapter {
@@ -19,7 +20,7 @@ public class WinScreen extends ScreenAdapter {
     private Stage stage;
     private BitmapFont font;
 
-    public WinScreen(SpriteBatch batch, ClickManager[] listener){
+    public WinScreen(SpriteBatch batch, ArrayList<ClickManager> listener){
         this.batch=batch;
         camera=new OrthographicCamera();
         //camera.setToOrtho(false,Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
@@ -37,9 +38,9 @@ public class WinScreen extends ScreenAdapter {
         nextbutton.setBounds(Gdx.graphics.getWidth()/2-100,Gdx.graphics.getHeight()/2-150,200,100);
         exitbutton.setBounds(Gdx.graphics.getWidth()/2-100,Gdx.graphics.getHeight()/2-250,200,100);
 
-        reloadbutton.addListener(listener[0]);
-        nextbutton.addListener(listener[1]);
-        exitbutton.addListener(listener[2]);
+        reloadbutton.addListener(listener.get(0));
+        nextbutton.addListener(listener.get(1));
+        exitbutton.addListener(listener.get(2));
 
         stage=new Stage();
         stage.clear();

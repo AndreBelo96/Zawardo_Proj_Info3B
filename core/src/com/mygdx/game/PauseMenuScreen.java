@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class PauseMenuScreen extends ScreenAdapter {
@@ -24,7 +25,7 @@ public class PauseMenuScreen extends ScreenAdapter {
     private BitmapFont font;
 
 
-    public PauseMenuScreen(SpriteBatch batch, ClickManager[] listener){
+    public PauseMenuScreen(SpriteBatch batch, ArrayList<ClickManager> listener){
         this.batch=batch;
         camera=new OrthographicCamera();
         TextButton.TextButtonStyle style=new TextButton.TextButtonStyle();
@@ -41,9 +42,9 @@ public class PauseMenuScreen extends ScreenAdapter {
         reloadbutton.setBounds (Gdx.graphics.getWidth()/2-100,Gdx.graphics.getHeight()/2-150,200,100);
         exitbutton.setBounds   (Gdx.graphics.getWidth()/2-100,Gdx.graphics.getHeight()/2-250,200,100);
 
-        continuebutton.addListener(listener[0]);
-        reloadbutton.addListener(listener[1]);
-        exitbutton.addListener(listener[2]);
+        continuebutton.addListener(listener.get(0));
+        reloadbutton.addListener(listener.get(1));
+        exitbutton.addListener(listener.get(2));
         stage=new Stage();
         stage.clear();
         Gdx.input.setInputProcessor(stage);

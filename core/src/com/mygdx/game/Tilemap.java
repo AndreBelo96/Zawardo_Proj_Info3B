@@ -89,6 +89,7 @@ public class Tilemap {
 
     private static void mapUpdate(int nextLevel){
         Tilemap.map_no=(new Integer(nextLevel)).toString();
+        System.out.println(Tilemap.map_no);
     }
 
     public static void mapUpdate(){
@@ -96,4 +97,5 @@ public class Tilemap {
         if(no==Constant.N_OF_LEVELS)mapUpdate(Constant.FIRST_LEVEL);
         else mapUpdate(no+1);
     }
+
 }
