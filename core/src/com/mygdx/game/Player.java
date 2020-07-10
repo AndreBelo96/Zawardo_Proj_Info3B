@@ -41,14 +41,12 @@ public class Player implements Entity{
         frames.clear();
         for(int i = 11 ; i < 28; i++)
             frames.add(new TextureRegion(this.screen.getAtlas().findRegion("Slime"), i * 20, 0, 20 ,21));
-        move = new Animation(.1f, frames, Animation.PlayMode.NORMAL);
+        move = new Animation(.05f, frames, Animation.PlayMode.NORMAL);
         frames.clear();
     }
 
     @Override
-    public void render(SpriteBatch batch) {
-        batch.draw(setRegion( time ), pos.x , pos.y );
-    }
+    public void render(SpriteBatch batch) {batch.draw(setRegion(time),pos.x,pos.y);}
 
     @Override
     public void update(float delta) {
@@ -89,7 +87,7 @@ public class Player implements Entity{
     }
 
     public void move(){
-        if(Gdx.input.isKeyJustPressed(Input.Keys.W) && canIJump){
+        if(Gdx.input.isKeyJustPressed(Input.Keys.W) && canIJump &&!currentState.equals(State.JUMPING)){
             bool_move = true;
             canIJump = false;
             Time_Control_Vel = 0;
@@ -97,7 +95,7 @@ public class Player implements Entity{
             worldPos.x += 1;
             currentState = State.JUMPING;
         }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.S) && canIJump){
+        if(Gdx.input.isKeyJustPressed(Input.Keys.S) && canIJump &&!currentState.equals(State.JUMPING)){
             bool_move = true;
             canIJump = false;
             Time_Control_Vel = 0;
@@ -105,7 +103,7 @@ public class Player implements Entity{
             worldPos.x -= 1;
             currentState = State.JUMPING;
         }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.A) && canIJump){
+        if(Gdx.input.isKeyJustPressed(Input.Keys.A) && canIJump &&!currentState.equals(State.JUMPING)){
             bool_move = true;
             canIJump = false;
             Time_Control_Vel = 0;
@@ -113,7 +111,7 @@ public class Player implements Entity{
             worldPos.y -= 1;
             currentState = State.JUMPING;
         }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.D) && canIJump){
+        if(Gdx.input.isKeyJustPressed(Input.Keys.D) && canIJump &&!currentState.equals(State.JUMPING)){
             bool_move = true;
             canIJump = false;
             Time_Control_Vel = 0;
