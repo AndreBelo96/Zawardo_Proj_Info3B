@@ -18,9 +18,9 @@ public class Game extends com.badlogic.gdx.Game {
 
 	public static boolean getCall(){return syscall;}
 	public static void setCall(boolean call){syscall=call;}
+	public static void reverseState(){syscall=!syscall;}
 
-	ArrayList<ClickManager> winsListener=new ArrayList<ClickManager>();
-	ArrayList<ClickManager> menuListener=new ArrayList<ClickManager>();
+	ArrayList<ClickManager> listeners=new ArrayList<ClickManager>();
 	EventListener actionDetector0 = new EventListener() {
 		@Override
 		public boolean handle(Event event) {
@@ -36,24 +36,27 @@ public class Game extends com.badlogic.gdx.Game {
 	public void create () {
 		batch   = new SpriteBatch();
 		screen  = new GameScreen(batch,actionDetector0);
-		winsListener.add(new ClickManager(){
+		listeners.add(new ClickManager(){
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				super.clicked(event, x, y);
+				if(!Game.getCall())reloadGame();
+				else Game.reverseState();
+				setScreen(screen);
+
+			}
+		});
+		listeners.add(new ClickManager(){
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				super.clicked(event, x, y);
+				if(!Game.getCall())Tilemap.mapUpdate();
+				else Game.reverseState();
 				reloadGame();
 				setScreen(screen);
 			}
 		});
-		winsListener.add(new ClickManager(){
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				super.clicked(event, x, y);
-				Tilemap.mapUpdate();
-				reloadGame();
-				setScreen(screen);
-			}
-		});
-		winsListener.add(new ClickManager(){
+		listeners.add(new ClickManager(){
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				super.clicked(event, x, y);
@@ -61,32 +64,8 @@ public class Game extends com.badlogic.gdx.Game {
 				Gdx.app.exit();
 			}
 		});
-		menuListener.add(new ClickManager(){
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				super.clicked(event, x, y);
-				Game.setCall(false);
-				setScreen(screen);
-			}
-		});
-		menuListener.add(new ClickManager(){
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				super.clicked(event, x, y);
-				reloadGame();
-				setScreen(screen);
-			}
-		});
-		menuListener.add(new ClickManager(){
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				super.clicked(event, x, y);
-				Game.this.dispose();
-				Gdx.app.exit();
-			}
-		});
-		wscreen = new WinScreen(batch,winsListener);
-		menu    = new PauseMenuScreen(batch,menuListener);
+		wscreen = new WinScreen(batch,listeners);
+		menu    = new PauseMenuScreen(batch,listeners);
 		setScreen(screen);
 	}
 
@@ -106,6 +85,7 @@ public class Game extends com.badlogic.gdx.Game {
 		screen=new GameScreen(batch,actionDetector0);
 	}
 	private void reloadWin(){
-		wscreen=new WinScreen(batch,winsListener);
+		wscreen=new WinScreen(batch,listeners);
 	}
+	private void reloadMenu(){menu=new PauseMenuScreen(batch,listeners);}
 }
