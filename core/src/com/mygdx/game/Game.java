@@ -12,20 +12,21 @@ import java.util.ArrayList;
 public class Game extends com.badlogic.gdx.Game {
 	private SpriteBatch batch;
 	private GameScreen screen;
-	private WinScreen wscreen;
+	private LoginScreen loginScreen;
+	private WinScreen winScreen;
 	private PauseMenuScreen menu;
-	private static boolean syscall=false;
+	private static boolean syscall = false;
 
-	public static boolean getCall(){return syscall;}
-	public static void setCall(boolean call){syscall=call;}
-	public static void reverseState(){syscall=!syscall;}
+	public static boolean getCall(){ return syscall; }
+	public static void setCall(boolean call){ syscall = call; }
+	public static void reverseState(){ syscall =! syscall; }
 
 	ArrayList<ClickManager> listeners=new ArrayList<ClickManager>();
 	EventListener actionDetector0 = new EventListener() {
 		@Override
 		public boolean handle(Event event) {
 			if(Game.getCall())setScreen(menu);
-			else setScreen(wscreen);
+			else setScreen(winScreen);
 			return true;
 		}
 	};
@@ -35,14 +36,14 @@ public class Game extends com.badlogic.gdx.Game {
 	@Override
 	public void create () {
 		batch   = new SpriteBatch();
-		screen  = new GameScreen(batch,actionDetector0);
+		loginScreen  = new LoginScreen(batch,actionDetector0);
 		listeners.add(new ClickManager(){
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				super.clicked(event, x, y);
 				if(!Game.getCall())reloadGame();
 				else Game.reverseState();
-				setScreen(screen);
+				setScreen(loginScreen);
 
 			}
 		});
@@ -53,7 +54,7 @@ public class Game extends com.badlogic.gdx.Game {
 				if(!Game.getCall())Tilemap.mapUpdate();
 				else Game.reverseState();
 				reloadGame();
-				setScreen(screen);
+				setScreen(loginScreen);
 			}
 		});
 		listeners.add(new ClickManager(){
@@ -64,9 +65,9 @@ public class Game extends com.badlogic.gdx.Game {
 				Gdx.app.exit();
 			}
 		});
-		wscreen = new WinScreen(batch,listeners);
+		winScreen = new WinScreen(batch,listeners);
 		menu    = new PauseMenuScreen(batch,listeners);
-		setScreen(screen);
+		setScreen(loginScreen);
 	}
 
 	@Override
@@ -76,16 +77,16 @@ public class Game extends com.badlogic.gdx.Game {
 
 	@Override
 	public void dispose () {
-		batch.dispose();
+		//batch.dispose();
 		screen.dispose();
-		wscreen.dispose();
+		winScreen.dispose();
 	}
 
 	private void reloadGame(){
 		screen=new GameScreen(batch,actionDetector0);
 	}
 	private void reloadWin(){
-		wscreen=new WinScreen(batch,listeners);
+		winScreen =new WinScreen(batch,listeners);
 	}
 	private void reloadMenu(){menu=new PauseMenuScreen(batch,listeners);}
 }

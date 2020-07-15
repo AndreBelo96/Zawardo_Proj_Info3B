@@ -27,15 +27,15 @@ public class PauseMenuScreen extends ScreenAdapter {
 
     public PauseMenuScreen(SpriteBatch batch, ArrayList<ClickManager> listener){
         this.batch=batch;
-        camera=new OrthographicCamera();
+        camera = new OrthographicCamera();
         TextButton.TextButtonStyle style=new TextButton.TextButtonStyle();
-        font=new BitmapFont(Gdx.files.internal("roboto_light.fnt"));
-        font.setColor(Color.WHITE);
-        style.font=font;
-        TextButton falsebutton=new TextButton("GAME PAUSED",style);
-        reloadbutton=new TextButton(Constant.RELOAD_TEXT,style);
-        exitbutton=new TextButton(Constant.EXIT_TEXT,style);
-        continuebutton=new TextButton("Continue",style);
+        font = new BitmapFont(Gdx.files.internal("roboto_light.fnt"));
+        font.setColor(Color.RED);
+        style.font = font;
+        TextButton falsebutton = new TextButton("GAME PAUSED",style);
+        reloadbutton = new TextButton(Constant.RELOAD_TEXT,style);
+        exitbutton = new TextButton(Constant.EXIT_TEXT,style);
+        continuebutton = new TextButton("Continue",style);
 
         falsebutton.setBounds    (Gdx.graphics.getWidth()/2-100,Gdx.graphics.getHeight()-200,200,100);
         continuebutton.setBounds(Gdx.graphics.getWidth()/2-100,Gdx.graphics.getHeight()/2-50,200,100);
@@ -45,7 +45,7 @@ public class PauseMenuScreen extends ScreenAdapter {
         continuebutton.addListener(listener.get(0));
         reloadbutton.addListener(listener.get(1));
         exitbutton.addListener(listener.get(2));
-        stage=new Stage();
+        stage = new Stage();
         stage.clear();
         Gdx.input.setInputProcessor(stage);
         stage.addActor(falsebutton);

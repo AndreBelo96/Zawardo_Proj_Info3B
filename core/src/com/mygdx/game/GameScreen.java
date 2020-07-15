@@ -20,7 +20,7 @@ public class GameScreen extends ScreenAdapter {
     public static Player player;
     private boolean bool_switch,bool_win, bool_lose;
     private static TextureAtlas atlas;
-    private Actor actor=new Actor();
+    private Actor actor = new Actor();
 
     public GameScreen(SpriteBatch batch, EventListener listener){
         this.batch = batch;
