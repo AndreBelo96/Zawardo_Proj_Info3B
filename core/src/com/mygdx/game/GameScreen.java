@@ -22,7 +22,7 @@ public class GameScreen extends ScreenAdapter {
     private static TextureAtlas atlas;
     private Actor actor = new Actor();
 
-    public GameScreen(SpriteBatch batch, EventListener listener){
+    public GameScreen(SpriteBatch batch, EventListener listener, Game game){
         this.batch = batch;
         atlas = new TextureAtlas("Asset_Proj.pack");
         camera = new OrthographicCamera(320,160);

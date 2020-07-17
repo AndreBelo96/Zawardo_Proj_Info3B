@@ -19,7 +19,7 @@ public class ClickManager extends ClickListener {
     public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
         //super.enter(event, x, y, pointer, fromActor);
         if(fromActor instanceof TextButton){
-            TextButton.TextButtonStyle temp=new TextButton.TextButtonStyle();
+            TextButton.TextButtonStyle temp = new TextButton.TextButtonStyle();
             BitmapFont font=new BitmapFont(Gdx.files.internal("roboto_black.fnt"));
             font.setColor(Color.WHITE);
             temp.font=font;
@@ -34,7 +34,7 @@ public class ClickManager extends ClickListener {
             TextButton.TextButtonStyle temp=new TextButton.TextButtonStyle();
             BitmapFont font=new BitmapFont(Gdx.files.internal("roboto_light.fnt"));
             font.setColor(Color.WHITE);
-            temp.font=font;
+            temp.font = font;
             ((TextButton)toActor).setStyle(temp);
         }
     }

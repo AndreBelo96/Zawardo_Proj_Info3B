@@ -82,6 +82,7 @@ public class Game extends com.badlogic.gdx.Game {
 		winScreen.dispose();
 	}
 
+	public static void setScreen(GameScreen screen){setScreen(screen);}
 	private void reloadGame(){
 		screen=new GameScreen(batch,actionDetector0);
 	}

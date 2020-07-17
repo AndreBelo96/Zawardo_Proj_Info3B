@@ -10,21 +10,20 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 
-
-import java.util.ArrayList;
-
 public class LoginScreen extends ScreenAdapter {
 
     private SpriteBatch batch;
     private Skin skin;
     private OrthographicCamera camera;
-    private TextButton reloadbutton,exitbutton,nextbutton;
+    private TextButton playButton,exitbutton;
     private Stage stage;
     private final Label name_label, pass_label;
     private final TextField nameText, passText;
@@ -32,10 +31,10 @@ public class LoginScreen extends ScreenAdapter {
     private BitmapFont font;
     private Actor actor;
 
-    public LoginScreen(SpriteBatch batch, EventListener listener){
-        this.batch=batch;
+    public LoginScreen(final SpriteBatch batch, final EventListener listener){
+        this.batch = batch;
         actor = new Actor();
-        actor.addListener(listener);
+
         camera=new OrthographicCamera();
         //camera.setToOrtho(false,Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
@@ -49,18 +48,27 @@ public class LoginScreen extends ScreenAdapter {
         pass_label = new Label("Password: ", label_style);
         nameText = new TextField(prefs.getString("name", ""), skin);
         passText = new TextField("", skin);
-        reloadbutton = new TextButton(Constant.RELOAD_TEXT,style);
-        nextbutton = new TextButton(Constant.NEXT_TEXT,style);
+        playButton = new TextButton("Play",style);
         exitbutton = new TextButton(Constant.EXIT_TEXT,style);
 
         name_label.setBounds(Gdx.graphics.getWidth()/2-300,Gdx.graphics.getHeight()-200,200,100);
         pass_label.setBounds(Gdx.graphics.getWidth()/2-300,Gdx.graphics.getHeight()-250,200,100);
         nameText.setBounds(Gdx.graphics.getWidth()/2-100,Gdx.graphics.getHeight()-170,200,50);
         passText.setBounds(Gdx.graphics.getWidth()/2-100,Gdx.graphics.getHeight()-220,200,50);
-        reloadbutton.setBounds(Gdx.graphics.getWidth()/2-100,Gdx.graphics.getHeight()/2-50,200,100);
-        nextbutton.setBounds(Gdx.graphics.getWidth()/2-100,Gdx.graphics.getHeight()/2-150,200,100);
+        playButton.setBounds(Gdx.graphics.getWidth()/2-100,Gdx.graphics.getHeight()/2-50,200,100);
         exitbutton.setBounds(Gdx.graphics.getWidth()/2-100,Gdx.graphics.getHeight()/2-250,200,100);
 
+        playButton.addListener(new InputListener(){
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+            }
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                //this.dispose();
+                Game.setScreen(new GameScreen(batch,listener));
+                return true;
+            }
+        });
 
         stage=new Stage();
         stage.clear();
@@ -69,9 +77,9 @@ public class LoginScreen extends ScreenAdapter {
         stage.addActor(pass_label);
         stage.addActor(nameText);
         stage.addActor(passText);
-        stage.addActor(reloadbutton);
-        stage.addActor(nextbutton);
+        stage.addActor(playButton);
         stage.addActor(exitbutton);
+        actor.addListener(listener);
     }
 
     @Override
