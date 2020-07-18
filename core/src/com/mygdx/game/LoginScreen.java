@@ -31,7 +31,7 @@ public class LoginScreen extends ScreenAdapter {
     private BitmapFont font;
     private Actor actor;
 
-    public LoginScreen(final SpriteBatch batch, final EventListener listener){
+    public LoginScreen(final SpriteBatch batch, final EventListener listener, final Game game){
         this.batch = batch;
         actor = new Actor();
 
@@ -65,7 +65,7 @@ public class LoginScreen extends ScreenAdapter {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 //this.dispose();
-                Game.setScreen(new GameScreen(batch,listener));
+                Game.setScreen(new GameScreen(batch,listener,game));
                 return true;
             }
         });

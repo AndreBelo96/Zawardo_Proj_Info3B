@@ -36,7 +36,7 @@ public class Game extends com.badlogic.gdx.Game {
 	@Override
 	public void create () {
 		batch   = new SpriteBatch();
-		loginScreen  = new LoginScreen(batch,actionDetector0);
+		loginScreen  = new LoginScreen(batch,actionDetector0,this);
 		listeners.add(new ClickManager(){
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -84,7 +84,7 @@ public class Game extends com.badlogic.gdx.Game {
 
 	public static void setScreen(GameScreen screen){setScreen(screen);}
 	private void reloadGame(){
-		screen=new GameScreen(batch,actionDetector0);
+		screen=new GameScreen(batch,actionDetector0,this);
 	}
 	private void reloadWin(){
 		winScreen =new WinScreen(batch,listeners);
