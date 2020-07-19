@@ -22,7 +22,7 @@ public class GameScreen extends ScreenAdapter {
     private static TextureAtlas atlas;
     private Actor actor = new Actor();
 
-    public GameScreen(SpriteBatch batch, EventListener listener, Game game){
+    public GameScreen(SpriteBatch batch, Game game){
         this.batch = batch;
         atlas = new TextureAtlas("Asset_Proj.pack");
         camera = new OrthographicCamera(320,160);
@@ -32,7 +32,7 @@ public class GameScreen extends ScreenAdapter {
         bool_switch = false;
         bool_win = false;
         bool_lose = true;
-        actor.addListener(listener);
+
     }
 
     public void render(float delta){
@@ -93,8 +93,8 @@ public class GameScreen extends ScreenAdapter {
     }
 
     public void cameraInput() {
-        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)&&!Game.getCall()){
-            Game.setCall(true);
+        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+
             actor.fire(new Event());}
         if(Gdx.input.isKeyJustPressed(Input.Keys.A) && player.isCanIJump()){
             camera.position.y -= 12;

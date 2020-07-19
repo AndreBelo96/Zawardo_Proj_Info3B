@@ -29,11 +29,9 @@ public class LoginScreen extends ScreenAdapter {
     private final TextField nameText, passText;
     private final Preferences prefs;
     private BitmapFont font;
-    private Actor actor;
 
-    public LoginScreen(final SpriteBatch batch, final EventListener listener){
+    public LoginScreen(final SpriteBatch batch, final Game game){
         this.batch = batch;
-        actor = new Actor();
 
         camera=new OrthographicCamera();
         //camera.setToOrtho(false,Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
@@ -50,12 +48,16 @@ public class LoginScreen extends ScreenAdapter {
         passText = new TextField("", skin);
         playButton = new TextButton("Play",style);
         exitbutton = new TextButton(Constant.EXIT_TEXT,style);
+        final LoginScreen loginScreen = this;
+        stage = new Stage();
+        stage.clear();
 
         name_label.setBounds(Gdx.graphics.getWidth()/2-300,Gdx.graphics.getHeight()-200,200,100);
         pass_label.setBounds(Gdx.graphics.getWidth()/2-300,Gdx.graphics.getHeight()-250,200,100);
         nameText.setBounds(Gdx.graphics.getWidth()/2-100,Gdx.graphics.getHeight()-170,200,50);
         passText.setBounds(Gdx.graphics.getWidth()/2-100,Gdx.graphics.getHeight()-220,200,50);
         playButton.setBounds(Gdx.graphics.getWidth()/2-100,Gdx.graphics.getHeight()/2-50,200,100);
+        playButton.setPosition(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
         exitbutton.setBounds(Gdx.graphics.getWidth()/2-100,Gdx.graphics.getHeight()/2-250,200,100);
 
         playButton.addListener(new InputListener(){
@@ -64,22 +66,24 @@ public class LoginScreen extends ScreenAdapter {
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                //this.dispose();
-                Game.setScreen(new GameScreen(batch,listener));
+                loginScreen.dispose();
+                Game.setScreen(new GameScreen(batch, game));
+                Gdx.app.log("RUNN", "PLS");
                 return true;
             }
         });
 
-        stage=new Stage();
-        stage.clear();
-        Gdx.input.setInputProcessor(stage);
+
+
         stage.addActor(name_label);
         stage.addActor(pass_label);
         stage.addActor(nameText);
         stage.addActor(passText);
         stage.addActor(playButton);
         stage.addActor(exitbutton);
-        actor.addListener(listener);
+
+        Gdx.input.setInputProcessor(this.stage);
+
     }
 
     @Override
