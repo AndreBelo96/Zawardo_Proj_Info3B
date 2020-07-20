@@ -17,8 +17,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class LoginScreen extends ScreenAdapter {
+    public final Game game;
 
     private SpriteBatch batch;
     private Skin skin;
@@ -30,9 +32,9 @@ public class LoginScreen extends ScreenAdapter {
     private final Preferences prefs;
     private BitmapFont font;
 
-    public LoginScreen(final SpriteBatch batch, final Game game){
-        this.batch = batch;
+    public LoginScreen( final Game game){
 
+        this.game = game;
         camera=new OrthographicCamera();
         //camera.setToOrtho(false,Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
@@ -60,18 +62,13 @@ public class LoginScreen extends ScreenAdapter {
         playButton.setPosition(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
         exitbutton.setBounds(Gdx.graphics.getWidth()/2-100,Gdx.graphics.getHeight()/2-250,200,100);
 
-        playButton.addListener(new InputListener(){
+        playButton.addListener(new ClickListener() {
             @Override
-            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("hiii");
+                game.setScreen( new GameScreen(game) );
             }
-            @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                loginScreen.dispose();
-                Game.setScreen(new GameScreen(batch, game));
-                Gdx.app.log("RUNN", "PLS");
-                return true;
-            }
-        });
+        } );
 
 
 
@@ -91,9 +88,9 @@ public class LoginScreen extends ScreenAdapter {
         Gdx.gl.glClearColor(0,0,0,0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        batch.setProjectionMatrix(camera.combined);
-        batch.begin();
-        batch.end();
+        game.batch.setProjectionMatrix(camera.combined);
+        game.batch.begin();
+        game.batch.end();
 
         stage.draw();
         stage.act();

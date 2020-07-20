@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.EventListener;
 
 
 public class GameScreen extends ScreenAdapter {
+    public final Game game;
 
     private SpriteBatch batch;
     private OrthographicCamera camera;
@@ -22,8 +23,8 @@ public class GameScreen extends ScreenAdapter {
     private static TextureAtlas atlas;
     private Actor actor = new Actor();
 
-    public GameScreen(SpriteBatch batch, Game game){
-        this.batch = batch;
+    public GameScreen(Game game){
+        this.game = game;
         atlas = new TextureAtlas("Asset_Proj.pack");
         camera = new OrthographicCamera(320,160);
         camera.position.set(Constant.TILE_WIDHT/2,Constant.TILE_HEIGHT/2,0);
@@ -40,7 +41,7 @@ public class GameScreen extends ScreenAdapter {
         Gdx.gl.glClearColor(0.5f,0.3f,0.3f,0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         // disegno sulla camera
-        batch.setProjectionMatrix(camera.combined);
+        game.batch.setProjectionMatrix(camera.combined);
         cameraInput();
 
 
@@ -53,10 +54,10 @@ public class GameScreen extends ScreenAdapter {
                 bool_switch = false;
             }
         }
-        batch.begin();
-        map.render(batch);
-        player.render(batch);
-        batch.end();
+        game.batch.begin();
+        map.render(game.batch);
+        player.render(game.batch);
+        game.batch.end();
 
         for(Tile t : map.base) {
             if (!t.on) {
