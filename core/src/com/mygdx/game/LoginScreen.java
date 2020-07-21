@@ -7,11 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -34,22 +30,20 @@ public class LoginScreen extends ScreenAdapter {
     public LoginScreen( final Game game){
 
         this.game = game;
-        camera=new OrthographicCamera();
-        //camera.setToOrtho(false,Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
-        TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
-        font = new BitmapFont(Gdx.files.internal("roboto_light.fnt"));
+        camera = new OrthographicCamera();
+
         skin = new Skin(Gdx.files.internal("skin.json"));
-        font.setColor(Color.WHITE);
-        style.font = font;
         prefs = Gdx.app.getPreferences("Zawardo");
-        Label.LabelStyle label_style = new Label.LabelStyle(font,Color.WHITE);
-        name_label = new Label("Name: ", label_style);
-        pass_label = new Label("Password: ", label_style);
+
+        name_label = new Label("Name: ", skin);
+        pass_label = new Label("Password: ", skin);
+
         nameText = new TextField(prefs.getString("name", ""), skin);
         passText = new TextField("", skin);
-        playButton = new TextButton("Play",style);
-        exitbutton = new TextButton(Constant.EXIT_TEXT,style);
-        //final LoginScreen loginScreen = this; //serve?
+
+        playButton = new TextButton("Play",skin);
+        exitbutton = new TextButton(Constant.EXIT_TEXT,skin);
+
         stage = new Stage();
         stage.clear();
 
@@ -63,8 +57,7 @@ public class LoginScreen extends ScreenAdapter {
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                //loginScreen.dispose();
-                game.setScreen( new GameScreen(game) );
+                game.setScreen( new GameScreen(game) );//dispose?
             }
         } );
         exitbutton.addListener(new ClickListener() {
