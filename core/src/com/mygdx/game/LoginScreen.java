@@ -65,6 +65,7 @@ public class LoginScreen extends ScreenAdapter {
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.exit();
             }
+
         } );
 
 

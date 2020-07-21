@@ -14,16 +14,14 @@ import com.badlogic.gdx.scenes.scene2d.EventListener;
 
 public class GameScreen extends ScreenAdapter {
     public final Game game;
-
-    private SpriteBatch batch;
     private OrthographicCamera camera;
     private Tilemap map;
     public static Player player;
     private boolean bool_switch,bool_win, bool_lose;
     private static TextureAtlas atlas;
-    private Actor actor = new Actor();
+    private Actor winActor,pauseActor;
 
-    public GameScreen(Game game){
+    public GameScreen(final Game game){
         this.game = game;
         atlas = new TextureAtlas("Asset_Proj.pack");
         camera = new OrthographicCamera(320,160);
@@ -33,7 +31,22 @@ public class GameScreen extends ScreenAdapter {
         bool_switch = false;
         bool_win = false;
         bool_lose = true;
-
+        winActor=new Actor();
+        pauseActor=new Actor();
+        winActor.addListener(new EventListener() {
+            @Override
+            public boolean handle(Event event) {
+                game.setScreen(new WinScreen(game));
+                return true;
+            }
+        });
+        pauseActor.addListener(new EventListener() {
+            @Override
+            public boolean handle(Event event) {
+                game.setScreen(new PauseMenuScreen(game,getGameScreen()));
+                return true;
+            }
+        });
     }
 
     public void render(float delta){
@@ -76,7 +89,7 @@ public class GameScreen extends ScreenAdapter {
 
         if(bool_win){
             System.out.println("YOU WIN");
-            actor.fire(new Event());
+            winActor.fire(new Event());
         }
 
         if(bool_lose){
@@ -95,8 +108,7 @@ public class GameScreen extends ScreenAdapter {
 
     public void cameraInput() {
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
-
-            actor.fire(new Event());}
+            pauseActor.fire(new Event());}
         if(Gdx.input.isKeyJustPressed(Input.Keys.A) && player.isCanIJump()){
             camera.position.y -= 12;
             camera.position.x -= 32;
@@ -143,5 +155,6 @@ public class GameScreen extends ScreenAdapter {
         return atlas;
     }
     public void setTileMap(Tilemap map){this.map=map;}
+    private GameScreen getGameScreen(){return this;}
 }
 
