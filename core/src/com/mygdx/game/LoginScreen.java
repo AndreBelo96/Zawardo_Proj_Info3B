@@ -22,7 +22,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 public class LoginScreen extends ScreenAdapter {
     public final Game game;
 
-    private SpriteBatch batch;
     private Skin skin;
     private OrthographicCamera camera;
     private TextButton playButton,exitbutton;
@@ -50,7 +49,7 @@ public class LoginScreen extends ScreenAdapter {
         passText = new TextField("", skin);
         playButton = new TextButton("Play",style);
         exitbutton = new TextButton(Constant.EXIT_TEXT,style);
-        final LoginScreen loginScreen = this;
+        //final LoginScreen loginScreen = this; //serve?
         stage = new Stage();
         stage.clear();
 
@@ -59,17 +58,21 @@ public class LoginScreen extends ScreenAdapter {
         nameText.setBounds(Gdx.graphics.getWidth()/2-100,Gdx.graphics.getHeight()-170,200,50);
         passText.setBounds(Gdx.graphics.getWidth()/2-100,Gdx.graphics.getHeight()-220,200,50);
         playButton.setBounds(Gdx.graphics.getWidth()/2-100,Gdx.graphics.getHeight()/2-50,200,100);
-        playButton.setPosition(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
         exitbutton.setBounds(Gdx.graphics.getWidth()/2-100,Gdx.graphics.getHeight()/2-250,200,100);
 
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("hiii");
+                //loginScreen.dispose();
                 game.setScreen( new GameScreen(game) );
             }
         } );
-
+        exitbutton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.app.exit();
+            }
+        } );
 
 
         stage.addActor(name_label);

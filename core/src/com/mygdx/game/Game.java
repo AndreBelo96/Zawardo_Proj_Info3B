@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Game extends com.badlogic.gdx.Game {
 	public static SpriteBatch batch;
 
-
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
@@ -22,5 +21,4 @@ public class Game extends com.badlogic.gdx.Game {
 		batch.dispose();
 		super.dispose();
 	}
-
 }
