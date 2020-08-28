@@ -56,7 +56,7 @@ public class GameScreen extends ScreenAdapter {
         // disegno sulla camera
         game.batch.setProjectionMatrix(camera.combined);
         cameraInput();
-        //commentocommitSergio StofacendoRObe non qui ma sul prog
+        //commentocommitSergio StofacendoRObe non qui ma sul prog, ben tornato
 
         camera.update();
         player.update(delta);
